@@ -1,9 +1,10 @@
 import React from 'react';
+import './NotePage.css'
 
 function NotePage(props) {
     let notes = props.props.notes;
     // console.log('props.props.notes is', props.props.notes);
-    const note = notes.find(p => p.id === 'cbc787a0-ffaf-11e8-8eb2-f2801f1b9fd1')
+    const note = notes.find(p => p.id === props.match.params.noteId)
 
     return (
         <section className="notes-display">
