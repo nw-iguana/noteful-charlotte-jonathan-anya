@@ -5,7 +5,7 @@ import Nav from './Components/Nav';
 import Folder from './Components/Folder';
 import Main from './Components/Main';
 import NotePage from './Components/NotePage';
-import dummyStore from './dummy-store';
+// import dummyStore from './dummy-store';
 import AppContext from './AppContext'
 
 
@@ -15,12 +15,27 @@ import AppContext from './AppContext'
 class App extends Component {
   state = {
     folders: [],
-    notes: []
+    notes: [],
   }
 
   componentDidMount() {
-    // fake date loading from API call
-    setTimeout(() => this.setState(dummyStore), 600)
+    fetch('http://localhost:9090/folders')
+    .then(response => response.json())
+    .then(responseJson => this.setState({
+      folders: responseJson
+    }));
+
+    fetch('http://localhost:9090/notes')
+    .then(response => response.json())
+    .then(responseJson => this.setState({
+      notes: responseJson
+    }));
+  }
+
+  handleDelete = (responseJson) => {
+    this.setState({
+      notes: responseJson
+    })
   }
 
   render() {
@@ -33,18 +48,15 @@ class App extends Component {
           <Nav />
           <section className="app-content">
             <main>
-                <Route
-                  exact path="/"
-                  render={routeProps => <Main {...routeProps} />}
-                />
-                <Route
-                  path="/folder/:folderId"
-                  render={routeProps => <Folder {...routeProps} />}
-                />
-                <Route
-                  path="/note/:noteId"
-                  render={routeProps => <NotePage {...routeProps} />}
-                />
+              <Route
+                exact path="/"
+                render={routeProps => <Main handleDelete={this.handleDelete} {...routeProps} />} />
+              <Route
+                path="/folder/:folderId"
+                component={Folder} />
+              <Route
+                path="/note/:noteId"
+                component={NotePage} />
             </main>
           </section>
         </div>
