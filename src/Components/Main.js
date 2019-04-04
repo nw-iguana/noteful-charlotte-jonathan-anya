@@ -5,27 +5,11 @@ import AppContext from '../AppContext';
 
 export default class Main extends Component {
   static contextType = AppContext;
-  handleDeleteButton = id => {
-    const url = `http://localhost:9090/notes/${id}`;
-    fetch(url, {
-      method: 'DELETE'
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error(response.statusText);
-        }
-      })
-      .then(() => this.context.handleDelete(id));
-  };
 
   render() {
-    console.log(this.props);
     return (
       <AppContext.Consumer>
         {({ notes }) => {
-          console.log(this.context);
           return notes.map((note, index) => {
             return (
               <main className="notes-display" key={index}>
@@ -35,7 +19,7 @@ export default class Main extends Component {
                   </Link>
                   <p>Date Modified: {note.modified}</p>
                   <button
-                    onClick={id => this.handleDeleteButton(note.id)}
+                    onClick={() => this.context.handleDeleteFetch(note.id)}
                     className="delete-button"
                   >
                     Delete Note

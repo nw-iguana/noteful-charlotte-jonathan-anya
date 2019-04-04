@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, Redirect } from 'react-router-dom';
 import './App.css';
 import Nav from './Components/Nav';
 import Folder from './Components/Folder';
 import Main from './Components/Main';
 import NotePage from './Components/NotePage';
-// import dummyStore from './dummy-store';
 import AppContext from './AppContext';
 
 // why doesn't this work here if it's a global variable?
@@ -14,7 +13,8 @@ import AppContext from './AppContext';
 class App extends Component {
   state = {
     folders: [],
-    notes: []
+    notes: [],
+    redirect: null
   };
 
   componentDidMount() {
@@ -35,6 +35,24 @@ class App extends Component {
       );
   }
 
+  handleDeleteFetch = (id, isClicked) => {
+    if (isClicked) {
+      this.setState({ redirect: true });
+    }
+    const url = `http://localhost:9090/notes/${id}`;
+    fetch(url, {
+      method: 'DELETE'
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(response.statusText);
+        }
+      })
+      .then(() => this.handleDelete(id));
+  };
+
   handleDelete = id => {
     this.setState({
       notes: this.state.notes.filter(note => note.id !== id)
@@ -45,6 +63,7 @@ class App extends Component {
     return (
       <AppContext.Provider
         value={Object.assign({}, this.state, {
+          handleDeleteFetch: this.handleDeleteFetch,
           handleDelete: this.handleDelete
         })}
       >
@@ -59,7 +78,16 @@ class App extends Component {
             <main>
               <Route exact path="/" component={Main} />
               <Route path="/folder/:folderId" component={Folder} />
-              <Route path="/note/:noteId" component={NotePage} />
+              <Route
+                path="/note/:noteId"
+                render={routeProps =>
+                  this.state.redirect ? (
+                    <Redirect to="/" />
+                  ) : (
+                    <NotePage {...routeProps} />
+                  )
+                }
+              />
             </main>
           </section>
         </div>
