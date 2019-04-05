@@ -3,6 +3,7 @@ import { Route, Link, Redirect } from 'react-router-dom';
 import './App.css';
 import Nav from './Components/Nav';
 import Folder from './Components/Folder';
+import AddFolder from './Components/AddFolder';
 import Main from './Components/Main';
 import NotePage from './Components/NotePage';
 import AppContext from './AppContext';
@@ -15,7 +16,7 @@ class App extends Component {
     folders: [],
     notes: [],
     redirect: null
-  };
+  }
 
   componentDidMount() {
     fetch('http://localhost:9090/folders')
@@ -57,16 +58,31 @@ class App extends Component {
     this.setState({
       notes: this.state.notes.filter(note => note.id !== id)
     });
-  };
+  }
+
+  handlePostFetch(event, folderName) {
+    fetch(`http://localhost:9090/folders`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name: folderName})
+    })
+      // .then(response => response.json())
+  }
 
   render() {
+    const context = {
+      folders: this.state.folders,
+      notes: this.state.notes,
+      handleDeleteFetch: this.handleDeleteFetch,
+      handleDelete: this.handleDelete,
+      handlePostFetch: this.handlePostFetch
+    }
+
     return (
-      <AppContext.Provider
-        value={Object.assign({}, this.state, {
-          handleDeleteFetch: this.handleDeleteFetch,
-          handleDelete: this.handleDelete
-        })}
-      >
+      <AppContext.Provider value={(context)}>
         <div className="App">
           <header>
             <Link to="/">
@@ -78,15 +94,11 @@ class App extends Component {
             <main>
               <Route exact path="/" component={Main} />
               <Route path="/folder/:folderId" component={Folder} />
+              <Route path="/addfolder" component={AddFolder} />
               <Route
                 path="/note/:noteId"
                 render={routeProps =>
-                  this.state.redirect ? (
-                    <Redirect to="/" />
-                  ) : (
-                    <NotePage {...routeProps} />
-                  )
-                }
+                  this.state.redirect ? <Redirect to="/" /> : <NotePage {...routeProps} />}
               />
             </main>
           </section>
