@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { Route, Link, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import './App.css';
+import Header from './Components/Header';
 import Nav from './Components/Nav';
 import Folder from './Components/Folder';
 import AddFolder from './Components/AddFolder';
 import Main from './Components/Main';
 import NotePage from './Components/NotePage';
+import AddNote from './Components/AddNote';
 import AppContext from './AppContext';
 
 // why doesn't this work here if it's a global variable?
@@ -60,7 +62,10 @@ class App extends Component {
     });
   }
 
-  handlePostFetch(event, folderName) {
+  handlePostFolder(event, folderName) {
+    // if (isClicked) {
+    //   this.setState({ redirect: true });
+    // }
     fetch(`http://localhost:9090/folders`, {
       method: 'POST',
       headers: {
@@ -69,7 +74,22 @@ class App extends Component {
       },
       body: JSON.stringify({name: folderName})
     })
-      // .then(response => response.json())
+  }
+
+  handlePostNote(event, {name, folderId, content}) {
+    fetch(`http://localhost:9090/notes`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        modified: new Date(),
+        name,
+        folderId,
+        content
+      })
+    })
   }
 
   render() {
@@ -78,23 +98,23 @@ class App extends Component {
       notes: this.state.notes,
       handleDeleteFetch: this.handleDeleteFetch,
       handleDelete: this.handleDelete,
-      handlePostFetch: this.handlePostFetch
+      handlePostFolder: this.handlePostFolder,
+      handlePostNote: this.handlePostNote
     }
 
     return (
       <AppContext.Provider value={(context)}>
         <div className="App">
-          <header>
-            <Link to="/">
-              <h1>Noteful</h1>
-            </Link>
-          </header>
-          <Nav />
+          <Route component={Header} />
+          <Route component={Nav} />
           <section className="app-content">
             <main>
               <Route exact path="/" component={Main} />
               <Route path="/folder/:folderId" component={Folder} />
-              <Route path="/addfolder" component={AddFolder} />
+
+              <Route exact path="/add-folder" component={AddFolder} />
+
+              <Route exact path="/add-note" component={AddNote} />
               <Route
                 path="/note/:noteId"
                 render={routeProps =>

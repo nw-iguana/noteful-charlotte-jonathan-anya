@@ -24,7 +24,6 @@ export default class Main extends Component {
                   >
                     Delete Note
                   </button>
-                  <button>Add Note</button>
                 </section>
               </main>
             );

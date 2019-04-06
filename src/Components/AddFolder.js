@@ -48,7 +48,7 @@ export default class AddFolder extends Component {
 
   handlePostSubmit(event, folderName) {
     event.preventDefault();
-    this.context.handlePostFetch(event, folderName);
+    this.context.handlePostFolder(event, folderName);
   }
 
   render() {
@@ -58,12 +58,19 @@ export default class AddFolder extends Component {
         onSubmit={(e, name) => this.handlePostSubmit(e, this.state.folderName)}>
         <label htmlFor="folder-name">Folder Name: </label>
         <input
+          type="text"
           id="folder-name"
+          name="folder-name"
           className="folder-name"
           defaultValue="i.e. Foobar"
+          aria-label="Input for new folder name"
+          aria-required="true"
+          aria-describedby="error-box"
           onChange={(e) => this.handleFolderName(e.target.value)} />
         <button type="submit" disabled={!this.state.nameValid}>Submit</button>
-        <p>{this.state.validation}</p>
+        <section className="error-box" id="error-box">
+          {this.state.validation}
+        </section>
       </form>
     )
   }
