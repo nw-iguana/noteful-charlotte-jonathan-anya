@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import './App.css';
+import ErrorBoundary from './ErrorBoundary';
+import AppContext from './AppContext';
 import Header from './Components/Header';
 import Nav from './Components/Nav';
 import Folder from './Components/Folder';
@@ -8,7 +10,6 @@ import AddFolder from './Components/AddFolder';
 import Main from './Components/Main';
 import NotePage from './Components/NotePage';
 import AddNote from './Components/AddNote';
-import AppContext from './AppContext';
 
 // why doesn't this work here if it's a global variable?
 // const AppContext = React.createContext();
@@ -63,9 +64,6 @@ class App extends Component {
   }
 
   handlePostFolder(event, folderName) {
-    // if (isClicked) {
-    //   this.setState({ redirect: true });
-    // }
     fetch(`http://localhost:9090/folders`, {
       method: 'POST',
       headers: {
@@ -103,28 +101,22 @@ class App extends Component {
     }
 
     return (
-      <AppContext.Provider value={(context)}>
-        <div className="App">
-          <Route component={Header} />
-          <Route component={Nav} />
-          <section className="app-content">
-            <main>
-              <Route exact path="/" component={Main} />
-              <Route path="/folder/:folderId" component={Folder} />
-
-              <Route exact path="/add-folder" component={AddFolder} />
-
-              <Route exact path="/add-note" component={AddNote} />
-              <Route
-                path="/note/:noteId"
-                render={routeProps =>
-                  this.state.redirect ? <Redirect to="/" /> : <NotePage {...routeProps} />}
-              />
-            </main>
-          </section>
-        </div>
-      </AppContext.Provider>
-    );
+        <AppContext.Provider value={(context)}>
+          <div className="App">
+            <Route component={Header} />
+            <Route component={Nav} />
+              <main className="app-content">
+                <ErrorBoundary>
+                  <Route exact path="/" component={Main} />
+                </ErrorBoundary>
+                <Route path="/folder/:folderId" component={Folder} />
+                <Route exact path="/add-folder" component={AddFolder} />
+                <Route exact path="/add-note" component={AddNote} />
+                <Route path="/note/:noteId" render={routeProps => this.state.redirect ? <Redirect to="/" /> : <NotePage {...routeProps} />} />
+              </main>
+          </div>
+        </AppContext.Provider>
+      )
   }
 }
 
