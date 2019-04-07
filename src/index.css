@@ -4,4 +4,17 @@
 
 body {
     font-family: 'Open Sans', sans-serif;
+    background-color: black;
+    background-image: url('trianglify.png');
+    background-attachment: fixed;
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    color: #333;
+}
+
+a:link, a:visited {
+    color: black;
+    text-decoration: none;
 }

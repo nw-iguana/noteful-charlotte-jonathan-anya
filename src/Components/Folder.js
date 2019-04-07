@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './Folder.css';
 import AppContext from '../AppContext';
 
 export default class Folder extends Component {
@@ -19,7 +18,7 @@ export default class Folder extends Component {
                     <Link to={`/note/${note.id}`}>
                       <h3>{note.name}</h3>
                     </Link>
-                    <p>Date Modified: {note.modified}</p>
+                    <p><span className="date-modified">Date Modified: {note.modified}</span></p>
                     <button
                       onClick={() => this.context.handleDeleteFetch(note.id)}
                       className="delete-button"

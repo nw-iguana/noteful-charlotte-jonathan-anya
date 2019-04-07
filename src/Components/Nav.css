@@ -1,10 +1,3 @@
-nav {
-    width: 20%;
-    float: left;
-    outline: 1px solid blue;
-    text-align: center;
-}
-
 nav ul {
     padding: 0;
     margin: 0;
@@ -15,10 +8,11 @@ nav ul li {
     margin-bottom: 20px;
 }
 
-a, a:visited {
-    text-transform: uppercase;
-    font-weight: normal;
-    color: black;
+.navigation {
+    width: 30%;
+    float: left;
+    text-align: center;
+    padding-right: 30px;
 }
 
 .add-content {
@@ -26,23 +20,41 @@ a, a:visited {
 }
 
 .add-content ul li {
-    float: left;
+    font-size: 0.9rem;
+    color: #fafafa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
     text-decoration: none;
-    outline: 1px solid orange;
-    width: 50%;
-    padding: 0px 10px;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background-color: #45d0ad;
+    border-radius: 20px;
+    transition: 0.4s ease all;
+}
+
+.add-content ul li:hover {
+    background-color: #a5efdc;
+}
+
+.folder-list h3 {
+    color: #333;
+    font-size: 0.9rem;
+    text-transform: uppercase;
 }
 
 .folder-list ul li {
-    list-style-type: none;
-    padding: 30px;
-    color: black;
-    background-color: white;
-    border: 1px solid rgb(37, 36, 36);
+    font-size: 0.9rem;
+    color: #fafafa;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background-color: #ffc381;
+    border-radius: 50px;
+    transition: 0.4s ease all;
 }
 
-.folder-list a, .folder-list a:active {
-    font-weight: bold;
-    background-color: black;
-    color: white;
+.folder-list ul li:hover {
+    background-color: #ffe498;
 }

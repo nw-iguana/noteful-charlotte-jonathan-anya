@@ -113,6 +113,7 @@ class App extends Component {
                 <Route exact path="/add-folder" component={AddFolder} />
                 <Route exact path="/add-note" component={AddNote} />
                 <Route path="/note/:noteId" render={routeProps => this.state.redirect ? <Redirect to="/" /> : <NotePage {...routeProps} />} />
+                <div className="clear"></div>
               </main>
           </div>
         </AppContext.Provider>

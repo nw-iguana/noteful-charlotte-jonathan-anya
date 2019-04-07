@@ -12,20 +12,17 @@ export default class Main extends Component {
         {({ notes }) => {
           return notes.map((note, index) => {
             return (
-              <main className="notes-display" key={index}>
-                <section className="note">
-                  <Link to={`/note/${note.id}`}>
-                    <h3>{note.name}</h3>
-                  </Link>
-                  <p>Date Modified: {note.modified}</p>
-                  <button
-                    onClick={() => this.context.handleDeleteFetch(note.id)}
-                    className="delete-button"
-                  >
-                    Delete Note
-                  </button>
-                </section>
-              </main>
+              <section className="notes-display" key={index}>
+                <Link to={`/note/${note.id}`}>
+                  <h3>{note.name}</h3>
+                </Link>
+                <p><span className="date-modified">Date Modified: {note.modified}</span></p>
+                <button
+                  onClick={() => this.context.handleDeleteFetch(note.id)}
+                  className="delete-button">
+                  Delete
+                </button>
+              </section>
             );
           });
         }}
