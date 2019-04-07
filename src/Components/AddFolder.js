@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import './FormStyles.css';
 import AppContext from '../AppContext';
-import './AddFolder.css';
 
 export default class AddFolder extends Component {
   static contextType = AppContext;
@@ -50,6 +50,7 @@ export default class AddFolder extends Component {
   handlePostSubmit(event, folderName) {
     event.preventDefault();
     this.context.handlePostFolder(event, folderName);
+    console.log(this.state.folderName);
   }
 
   render() {
@@ -57,7 +58,7 @@ export default class AddFolder extends Component {
       <main className="notes-display">
         <form
           className="react-form"
-          onSubmit={(e, name) => this.handlePostSubmit(e, this.state.folderName)}>
+          onSubmit={e => this.handlePostSubmit(e, this.state.folderName)}>
           <label htmlFor="folder-name">Folder Name: </label>
           <input
             type="text"
@@ -68,7 +69,7 @@ export default class AddFolder extends Component {
             aria-label="Input for new folder name"
             aria-required="true"
             aria-describedby="error-box"
-            onChange={(e) => this.handleFolderName(e.target.value)} />
+            onChange={e => this.handleFolderName(e.target.value)} />
           <button
             className="submit-button"
             type="submit"

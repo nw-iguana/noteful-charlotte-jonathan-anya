@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import AppContext from '../AppContext';
+import DateModified from './DateModified';
+import DeleteButton from './DeleteButton';
 
 export default class Main extends Component {
   static contextType = AppContext;
@@ -13,13 +15,9 @@ export default class Main extends Component {
               return (
                 <section className="notes-display" key={note.id}>
                   <h3>{note.name}</h3>
-                  <p><span className="date-modified">Date Modified: {note.modified}</span></p>
-                  <button
-                    onClick={() => this.context.handleDeleteFetch(note.id, true)}
-                    className="delete-button">
-                    Delete
-                  </button>
-                  <p>{note.content.replace(/(?:\r\n|\r|\n)/g, '<br>')}</p>
+                  <DateModified note={note} />
+                  <DeleteButton note={note} />
+                  {note.content.split('\n \r').map((para, index) => <p key={index}>{para}</p>)}
                 </section>
               )
             })

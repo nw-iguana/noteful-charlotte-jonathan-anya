@@ -11,10 +11,11 @@ export default class Nav extends Component {
           return (
             <nav className="navigation">
               <section className="add-content">
-                <NavLink to={'./add-folder'}>
+                <NavLink to={'/add-folder'}>
+                {/* This wasn't working before because I had './add-folder' instead of '/add-folder' ... the period before the forward-slash messed it up! */}
                   <ul><li>Add Folder</li></ul>
                 </NavLink>
-                <NavLink to={'./add-note'}>
+                <NavLink to={'/add-note'}>
                   <ul><li>Add Note</li></ul>
                 </NavLink>
               </section>
@@ -22,8 +23,8 @@ export default class Nav extends Component {
                 <h3>Your Folders:</h3>
                 {folders.map((folder, index) => {
                   return (
-                    <NavLink to={`/folder/${folder.id}`}>
-                    <ul><li key={index}>{folder.name}</li></ul>
+                    <NavLink key={index} to={`/folder/${folder.id}`}>
+                    <ul><li>{folder.name}</li></ul>
                     </NavLink>
                   )
                 })}

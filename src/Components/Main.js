@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import './Main.css';
 import AppContext from '../AppContext';
+import DateModified from './DateModified';
+import DeleteButton from './DeleteButton';
 
 export default class Main extends Component {
   static contextType = AppContext;
@@ -16,12 +18,8 @@ export default class Main extends Component {
                 <Link to={`/note/${note.id}`}>
                   <h3>{note.name}</h3>
                 </Link>
-                <p><span className="date-modified">Date Modified: {note.modified}</span></p>
-                <button
-                  onClick={() => this.context.handleDeleteFetch(note.id)}
-                  className="delete-button">
-                  Delete
-                </button>
+                <DateModified note={note} />
+                <DeleteButton note={note} />
               </section>
             );
           });

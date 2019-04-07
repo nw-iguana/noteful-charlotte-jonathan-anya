@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './FormStyles.css';
 import AppContext from '../AppContext';
 
 export default class AddNote extends Component {
@@ -94,7 +95,7 @@ export default class AddNote extends Component {
       <main className="notes-display">
         <form
           className="react-form"
-          onSubmit={(e, name) => this.handlePostSubmit(e, this.state)}>
+          onSubmit={e => this.handlePostSubmit(e, this.state)}>
           <label htmlFor="note-title">Title: </label>
           <input
             type="text"
