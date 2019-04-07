@@ -2,6 +2,7 @@ nav {
     width: 20%;
     float: left;
     outline: 1px solid blue;
+    text-align: center;
 }
 
 nav ul {
@@ -11,17 +12,37 @@ nav ul {
 
 nav ul li {
     list-style-type: none;
-    padding: 30px;
     margin-bottom: 20px;
-    color: black;
-    text-transform: uppercase;
-    text-decoration: none;
-    background-color: white;
-    border: 1px solid black;
 }
 
-nav ul li .active {
+a, a:visited {
+    text-transform: uppercase;
+    font-weight: normal;
+    color: black;
+}
+
+.add-content {
+    margin-bottom: 30px;
+}
+
+.add-content ul li {
+    float: left;
+    text-decoration: none;
+    outline: 1px solid orange;
+    width: 50%;
+    padding: 0px 10px;
+}
+
+.folder-list ul li {
+    list-style-type: none;
+    padding: 30px;
+    color: black;
+    background-color: white;
+    border: 1px solid rgb(37, 36, 36);
+}
+
+.folder-list a, .folder-list a:active {
+    font-weight: bold;
     background-color: black;
-    border: 1px solid black;
     color: white;
 }

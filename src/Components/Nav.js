@@ -1,25 +1,36 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import './Nav.css';
 import AppContext from '../AppContext';
 
-export default function Nav() {
+export default class Nav extends Component {
+  render() {
     return (
-        <AppContext.Consumer>
-            {({ folders }) => {
+      <AppContext.Consumer>
+        {({ folders }) => {
+          return (
+          <nav className="navigation">
+            <section className="add-content">
+              <NavLink to={'./add-folder'}>
+                <ul><li>Add Folder</li></ul>
+              </NavLink>
+              <NavLink to={'./add-note'}>
+                <ul><li>Add Note</li></ul>
+              </NavLink>
+            </section>
+            <section className="folder-list">
+              {folders.map((folder, index) => {
                 return (
-                <nav className='navigation'>
-                    <ul>
-                        {folders.map((folder, index) => {
-                            return (
-                                <li key={index}><NavLink to={`/folder/${folder.id}`}>{folder.name}</NavLink></li>
-                            )
-                        })}
-                    </ul>
-                    <button className="add-folder">Add Folder</button>
-                </nav>
+                  <NavLink to={`/folder/${folder.id}`}>
+                  <ul><li key={index}>{folder.name}</li></ul>
+                  </NavLink>
                 )
-            }}
-        </AppContext.Consumer>
+              })}
+            </section>
+          </nav>
+          )
+        }}
+      </AppContext.Consumer>
     )
+  }
 }
