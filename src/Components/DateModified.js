@@ -1,4 +1,5 @@
 import React from 'react';
+import './DateModified.css';
 
 export default function DateModified(props) {
   let note = props.note;
