@@ -21,9 +21,8 @@ export default class Folder extends Component {
                     <p><span className="date-modified">Date Modified: {note.modified}</span></p>
                     <button
                       onClick={() => this.context.handleDeleteFetch(note.id)}
-                      className="delete-button"
-                    >
-                      Delete Note
+                      className="delete-button">
+                      Delete
                     </button>
                   </section>
                 </main>
