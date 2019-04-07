@@ -2,4 +2,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Demo
 
-[https://noteful-app.charlotteshih.now.sh/](View Live Version)
+https://noteful-app.charlotteshih.now.sh/
