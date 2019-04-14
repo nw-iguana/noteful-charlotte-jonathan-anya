@@ -11,8 +11,9 @@ export default class AddFolder extends Component {
     validation: ''
   }
 
-  handleFolderName = (name) => {
-    this.setState({ folderName: name }, this.validateFolder(name))
+  handleFolderName = (e) => {
+    let folderInput = e.target.value;
+    this.setState({ folderName: folderInput }, this.validateFolder(folderInput))
   }
 
   validateFolder(name) {
@@ -47,9 +48,8 @@ export default class AddFolder extends Component {
     }
   }
 
-  handlePostSubmit(event, folderName) {
-    this.context.handlePostFolder(event, folderName);
-    console.log(this.state.folderName);
+  handlePostSubmit = () => {
+    this.context.handlePostFolder(this.state.folderName);
   }
 
   render() {
@@ -57,7 +57,7 @@ export default class AddFolder extends Component {
       <main className="notes-display">
         <form
           className="react-form"
-          onSubmit={e => this.handlePostSubmit(e, this.state.folderName)}>
+          onSubmit={this.handlePostSubmit}>
           <label htmlFor="folder-name">Folder Name: </label>
           <input
             type="text"
@@ -68,7 +68,7 @@ export default class AddFolder extends Component {
             aria-label="Input for new folder name"
             aria-required="true"
             aria-describedby="error-box"
-            onChange={e => this.handleFolderName(e.target.value)} />
+            onChange={this.handleFolderName} />
           <button
             className="submit-button"
             type="submit"

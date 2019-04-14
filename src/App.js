@@ -11,9 +11,6 @@ import Main from './Components/Main';
 import NotePage from './Components/NotePage';
 import AddNote from './Components/AddNote';
 
-// why doesn't this work here if it's a global variable?
-// const AppContext = React.createContext();
-
 class App extends Component {
   state = {
     folders: [],
@@ -39,12 +36,15 @@ class App extends Component {
       );
   }
 
-  handleDeleteFetch = (id, isClicked) => {
+  handleDeleteFetch = (noteId, isClicked) => {
+    // the problem here is that once the delete button is clicked, 'redirect' will be set to 'true', and you will no longer be able to click on individual notes, because it will then always redirect to the main page.
+
+    // we could always just stop setting the state altogether, but then we have to find another way to redirect to the main page if the user clicks on the delete button on the note page.
     if (isClicked) {
       this.setState({ redirect: true });
     }
-    const url = `http://localhost:9090/notes/${id}`;
-    fetch(url, {
+
+    fetch(`http://localhost:9090/notes/${noteId}`, {
       method: 'DELETE'
     })
       .then(response => {
@@ -54,16 +54,16 @@ class App extends Component {
           throw new Error(response.statusText);
         }
       })
-      .then(() => this.handleDelete(id));
-  };
+      .then(this.handleDelete(noteId));
+  }
 
-  handleDelete = id => {
+  handleDelete(id) {
     this.setState({
       notes: this.state.notes.filter(note => note.id !== id)
     });
   }
 
-  handlePostFolder(event, folderName) {
+  handlePostFolder(folderName) {
     fetch(`http://localhost:9090/folders`, {
       method: 'POST',
       headers: {
@@ -74,7 +74,7 @@ class App extends Component {
     })
   }
 
-  handlePostNote(event, {name, folderId, content}) {
+  handlePostNote({ name, folderId, content }) {
     fetch(`http://localhost:9090/notes`, {
       method: 'POST',
       headers: {
@@ -122,3 +122,5 @@ class App extends Component {
 }
 
 export default App;
+
+

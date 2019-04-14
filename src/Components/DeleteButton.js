@@ -5,13 +5,15 @@ import './DeleteButton.css';
 export default class DeleteButton extends Component {
   static contextType = AppContext;
   render() {
-    let note = this.props.note;
+    let noteId = this.props.note.id;
     return(
-      <button
-        className="delete-button"
-        onClick={() => this.context.handleDeleteFetch(note.id, true)}>
-        Delete
-      </button>
+        <button
+          type="submit"
+          className="delete-button"
+          // id={noteId}
+          onClick={() => this.context.handleDeleteFetch(noteId, true)}>
+          Delete
+        </button>
     )
   }
 }

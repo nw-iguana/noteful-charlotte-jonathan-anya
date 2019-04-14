@@ -15,20 +15,23 @@ export default class AddNote extends Component {
     contentValidation: ''
   }
 
-  handlePostSubmit(event, note) {
-    // event.preventDefault();
-    this.context.handlePostNote(event, note);
+  handlePostSubmit = () => {
+    this.context.handlePostNote(this.state);
   }
 
-  handleNoteTitle = (title) => {
-    this.setState({ name: title }, this.validateTitle(title))
+  handleNoteTitle = (e) => {
+    let titleInput = e.target.value;
+
+    this.setState({ name: titleInput }, this.validateTitle(titleInput))
   }
 
-  handleNoteContent = (content) => {
-    this.setState({ content }, this.validateContent(content))
+  handleNoteContent = (e) => {
+    let contentInput = e.target.value;
+    this.setState({ content: contentInput }, this.validateContent(contentInput))
   }
 
-  handleFolderId = (folderId) => {
+  handleFolderId = (e) => {
+    let folderId = e.target.value;
     this.setState({ folderId })
   }
 
@@ -95,7 +98,7 @@ export default class AddNote extends Component {
       <main className="notes-display">
         <form
           className="react-form"
-          onSubmit={e => this.handlePostSubmit(e, this.state)}>
+          onSubmit={this.handlePostSubmit}>
           <label htmlFor="note-title">Title: </label>
           <input
             type="text"
@@ -105,7 +108,7 @@ export default class AddNote extends Component {
             aria-label="Input for new note title"
             aria-required="true"
             aria-describedby="error-box"
-            onChange={e => this.handleNoteTitle(e.target.value)} />
+            onChange={this.handleNoteTitle} />
           <label htmlFor="note-content">Content: </label>
           <textarea
             rows="10"
@@ -116,7 +119,7 @@ export default class AddNote extends Component {
             aria-label="Input for content of new note"
             aria-required="true"
             aria-describedby="error-box"
-            onChange={e => this.handleNoteContent(e.target.value)} />
+            onChange={this.handleNoteContent} />
           <label htmlFor="note-folder">Folder: </label>
           <select
             id="note-folder"
@@ -124,7 +127,7 @@ export default class AddNote extends Component {
             aria-label="Select Folder from Options"
             aria-required="true"
             aria-describedby="error-box"
-            onChange={e => this.handleFolderId(e.target.value)}>
+            onChange={this.handleFolderId}>
             {<option key="0" value="0">Please select a folder...</option>}
             {folderList.map((name, id) => {
               return <option key={folderIds[id]} value={folderIds[id]}>{name}</option>
