@@ -48,7 +48,6 @@ export default class AddFolder extends Component {
   }
 
   handlePostSubmit(event, folderName) {
-    event.preventDefault();
     this.context.handlePostFolder(event, folderName);
     console.log(this.state.folderName);
   }

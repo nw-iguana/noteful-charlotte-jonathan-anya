@@ -16,7 +16,7 @@ export default class AddNote extends Component {
   }
 
   handlePostSubmit(event, note) {
-    event.preventDefault();
+    // event.preventDefault();
     this.context.handlePostNote(event, note);
   }
 
@@ -38,7 +38,7 @@ export default class AddNote extends Component {
 
     if (title.length === 0) {
       hasError = true;
-      validationMessages = 'Title cannot be blank.'
+      validationMessages = ' Title cannot be blank. '
     }
     
     else {
@@ -57,7 +57,7 @@ export default class AddNote extends Component {
 
     if (content.length === 0) {
       hasError = true;
-      validationMessages = 'Note cannot be blank.'
+      validationMessages = ' Note cannot be blank. '
     }
     
     else {
@@ -125,6 +125,7 @@ export default class AddNote extends Component {
             aria-required="true"
             aria-describedby="error-box"
             onChange={e => this.handleFolderId(e.target.value)}>
+            {<option key="0" value="0">Please select a folder...</option>}
             {folderList.map((name, id) => {
               return <option key={folderIds[id]} value={folderIds[id]}>{name}</option>
             })}

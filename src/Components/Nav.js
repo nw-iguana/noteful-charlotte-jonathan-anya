@@ -12,7 +12,6 @@ export default class Nav extends Component {
             <nav className="navigation">
               <section className="add-content">
                 <NavLink to={'/add-folder'}>
-                {/* This wasn't working before because I had './add-folder' instead of '/add-folder' ... the period before the forward-slash messed it up! */}
                   <ul><li>Add Folder</li></ul>
                 </NavLink>
                 <NavLink to={'/add-note'}>

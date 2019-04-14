@@ -55,10 +55,12 @@ form select {
 
 .submit-button:disabled {
     background-color: #ccc;
+    cursor: not-allowed;
 }
 
 .error-box {
     float: right;
+    color: red;
     margin-top: -60px;
     padding: 20px;
     border-radius: 20px;
