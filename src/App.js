@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import './App.css';
 import ErrorBoundary from './ErrorBoundary';
 import AppContext from './AppContext';
@@ -14,8 +14,7 @@ import AddNote from './Components/AddNote';
 class App extends Component {
   state = {
     folders: [],
-    notes: [],
-    redirect: null
+    notes: []
   }
 
   componentDidMount() {
@@ -36,14 +35,7 @@ class App extends Component {
       );
   }
 
-  handleDeleteFetch = (noteId, isClicked) => {
-    // the problem here is that once the delete button is clicked, 'redirect' will be set to 'true', and you will no longer be able to click on individual notes, because it will then always redirect to the main page.
-
-    // we could always just stop setting the state altogether, but then we have to find another way to redirect to the main page if the user clicks on the delete button on the note page.
-    if (isClicked) {
-      this.setState({ redirect: true });
-    }
-
+  handleDeleteFetch = (noteId) => {
     fetch(`http://localhost:9090/notes/${noteId}`, {
       method: 'DELETE'
     })
@@ -112,7 +104,7 @@ class App extends Component {
                 <Route path="/folder/:folderId" component={Folder} />
                 <Route exact path="/add-folder" component={AddFolder} />
                 <Route exact path="/add-note" component={AddNote} />
-                <Route path="/note/:noteId" render={routeProps => this.state.redirect ? <Redirect to="/" /> : <NotePage {...routeProps} />} />
+                <Route path="/note/:noteId" render={routeProps => <NotePage {...routeProps} />} />
                 <div className="clear"></div>
               </main>
           </div>
