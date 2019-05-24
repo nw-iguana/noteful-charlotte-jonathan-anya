@@ -67,7 +67,7 @@ class App extends Component {
     })
   }
 
-  handlePostNote({ name, folderId, content }) {
+  handlePostNote({ title, folder_id, content }) {
     fetch(config.API_ENDPOINT + `/notes`, {
       method: 'POST',
       headers: {
@@ -76,8 +76,8 @@ class App extends Component {
       },
       body: JSON.stringify({
         modified: new Date(),
-        name,
-        folderId,
+        title,
+        folder_id,
         content
       })
     })
