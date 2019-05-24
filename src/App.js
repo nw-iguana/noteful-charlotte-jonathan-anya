@@ -10,6 +10,7 @@ import AddFolder from './Components/AddFolder';
 import Main from './Components/Main';
 import NotePage from './Components/NotePage';
 import AddNote from './Components/AddNote';
+import config from './config';
 
 class App extends Component {
   state = {
@@ -18,7 +19,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('http://localhost:9090/folders')
+    fetch(config.API_ENDPOINT + `/folders`)
       .then(response => response.json())
       .then(responseJson =>
         this.setState({
@@ -26,7 +27,7 @@ class App extends Component {
         })
       );
 
-    fetch('http://localhost:9090/notes')
+    fetch(config.API_ENDPOINT + `/notes`)
       .then(response => response.json())
       .then(responseJson =>
         this.setState({
@@ -36,7 +37,7 @@ class App extends Component {
   }
 
   handleDeleteFetch = (noteId) => {
-    fetch(`http://localhost:9090/notes/${noteId}`, {
+    fetch(config.API_ENDPOINT + `/notes/${noteId}`, {
       method: 'DELETE'
     })
       .then(response => {
@@ -56,7 +57,7 @@ class App extends Component {
   }
 
   handlePostFolder(folderName) {
-    fetch(`http://localhost:9090/folders`, {
+    fetch(config.API_ENDPOINT + `/folders`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -67,7 +68,7 @@ class App extends Component {
   }
 
   handlePostNote({ name, folderId, content }) {
-    fetch(`http://localhost:9090/notes`, {
+    fetch(config.API_ENDPOINT + `/notes`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -101,10 +102,10 @@ class App extends Component {
                 <ErrorBoundary>
                   <Route exact path="/" component={Main} />
                 </ErrorBoundary>
-                <Route path="/folder/:folderId" component={Folder} />
+                <Route path="/folders/:folderId" component={Folder} />
                 <Route exact path="/add-folder" component={AddFolder} />
                 <Route exact path="/add-note" component={AddNote} />
-                <Route path="/note/:noteId" render={routeProps => <NotePage {...routeProps} />} />
+                <Route path="/notes/:noteId" render={routeProps => <NotePage {...routeProps} />} />
                 <div className="clear"></div>
               </main>
           </div>

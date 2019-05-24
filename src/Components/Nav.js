@@ -22,7 +22,7 @@ export default class Nav extends Component {
                 <h3>Your Folders:</h3>
                 {folders.map((folder, index) => {
                   return (
-                    <NavLink key={index} to={`/folder/${folder.id}`}>
+                    <NavLink key={index} to={`/folders/${folder.id}`}>
                     <ul><li>{folder.name}</li></ul>
                     </NavLink>
                   )

@@ -16,7 +16,7 @@ export default class Folder extends Component {
             .map(note => {
               return (
                 <section className="notes-display" key={note.id}>
-                  <Link to={`/note/${note.id}`}>
+                  <Link to={`/notes/${note.id}`}>
                     <h3>{note.name}</h3>
                   </Link>
                 <DateModified note={note} />
