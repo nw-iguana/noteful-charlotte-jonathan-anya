@@ -13,8 +13,7 @@ export default class Folder extends Component {
         {({ notes }) => {
           console.log(notes)
           return notes
-            // filter is not working
-            .filter(note => note.folder_id === this.props.match.params.folder_id)
+            .filter(note => note.folder_id === parseInt(this.props.match.params.folder_id))
             .map(note => {
               return (
                 <section className="notes-display" key={note.id}>

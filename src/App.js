@@ -43,6 +43,8 @@ class App extends Component {
       .then(response => {
         if (response.ok) {
           // problem with response.json()
+          // "unexpected end of input"
+          console.log(response.json)
           return response.json();
         } else {
           throw new Error(response.statusText);
@@ -57,8 +59,8 @@ class App extends Component {
     });
   }
 
-  // POST method not working
   handlePostFolder(folderName) {
+    // only works sometimes
     fetch(config.API_ENDPOINT + `/folders`, {
       method: 'POST',
       body: JSON.stringify({
@@ -70,8 +72,8 @@ class App extends Component {
     })
   }
 
-  // POST method not working
   handlePostNote({ title, folder_id, content }) {
+    // only works sometimes
     fetch(config.API_ENDPOINT + `/notes`, {
       method: 'POST',
       headers: {
