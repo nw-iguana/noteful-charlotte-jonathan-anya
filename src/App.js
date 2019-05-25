@@ -42,6 +42,7 @@ class App extends Component {
     })
       .then(response => {
         if (response.ok) {
+          // problem with response.json()
           return response.json();
         } else {
           throw new Error(response.statusText);
@@ -56,26 +57,28 @@ class App extends Component {
     });
   }
 
+  // POST method not working
   handlePostFolder(folderName) {
     fetch(config.API_ENDPOINT + `/folders`, {
       method: 'POST',
+      body: JSON.stringify({
+        name: folderName
+      }),
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({name: folderName})
     })
   }
 
+  // POST method not working
   handlePostNote({ title, folder_id, content }) {
     fetch(config.API_ENDPOINT + `/notes`, {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        modified: new Date(),
+        date_modified: new Date(),
         title,
         folder_id,
         content
@@ -102,10 +105,10 @@ class App extends Component {
                 <ErrorBoundary>
                   <Route exact path="/" component={Main} />
                 </ErrorBoundary>
-                <Route path="/folders/:folderId" component={Folder} />
+                <Route path="/folders/:folder_id" component={Folder} />
                 <Route exact path="/add-folder" component={AddFolder} />
                 <Route exact path="/add-note" component={AddNote} />
-                <Route path="/notes/:noteId" render={routeProps => <NotePage {...routeProps} />} />
+                <Route path="/notes/:note_id" render={routeProps => <NotePage {...routeProps} />} />
                 <div className="clear"></div>
               </main>
           </div>

@@ -11,13 +11,15 @@ export default class Folder extends Component {
     return (
       <AppContext.Consumer>
         {({ notes }) => {
+          console.log(notes)
           return notes
-            .filter(note => note.folderId === this.props.match.params.folderId)
+            // filter is not working
+            .filter(note => note.folder_id === this.props.match.params.folder_id)
             .map(note => {
               return (
                 <section className="notes-display" key={note.id}>
                   <Link to={`/notes/${note.id}`}>
-                    <h3>{note.name}</h3>
+                    <h3>{note.title}</h3>
                   </Link>
                 <DateModified note={note} />
                 <DeleteButton note={note} />

@@ -6,12 +6,12 @@ export default class AddNote extends Component {
   static contextType = AppContext;
 
   state = {
-    name: '',
-    folderId: '',
+    title: '',
+    folder_id: '',
     content: '',
-    nameValid: false,
+    titleValid: false,
     contentValid: false,
-    nameValidation: '',
+    titleValidation: '',
     contentValidation: ''
   }
 
@@ -22,7 +22,7 @@ export default class AddNote extends Component {
   handleNoteTitle = (e) => {
     let titleInput = e.target.value;
 
-    this.setState({ name: titleInput }, this.validateTitle(titleInput))
+    this.setState({ title: titleInput }, this.validateTitle(titleInput))
   }
 
   handleNoteContent = (e) => {
@@ -31,12 +31,12 @@ export default class AddNote extends Component {
   }
 
   handleFolderId = (e) => {
-    let folderId = e.target.value;
-    this.setState({ folderId })
+    let folder_id = e.target.value;
+    this.setState({ folder_id })
   }
 
   validateTitle(title) {
-    let validationMessages = this.state.nameValidation;
+    let validationMessages = this.state.titleValidation;
     let hasError = false;
 
     if (title.length === 0) {
@@ -49,8 +49,8 @@ export default class AddNote extends Component {
     }
 
     this.setState({
-      nameValid: !hasError,
-      nameValidation: validationMessages,
+      titleValid: !hasError,
+      titleValidation: validationMessages,
     }, this.titleValid(title));
   }
 
@@ -74,8 +74,8 @@ export default class AddNote extends Component {
   }
 
   titleValid(title) {
-    if (this.state.name) {
-      this.setState({name: title})
+    if (this.state.title) {
+      this.setState({title: title})
     }
   }
 
@@ -136,11 +136,11 @@ export default class AddNote extends Component {
           <button
             className="submit-button"
             type="submit"
-            disabled={!this.state.nameValid || !this.state.contentValid}>
+            disabled={!this.state.titleValid || !this.state.contentValid}>
             Submit
           </button>
           <section className="error-box" id="error-box" aria-live="assertive">
-            {this.state.nameValidation} 
+            {this.state.titleValidation} 
             {this.state.contentValidation}
           </section>
         </form>

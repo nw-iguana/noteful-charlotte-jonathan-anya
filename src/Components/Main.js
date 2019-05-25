@@ -16,7 +16,7 @@ export default class Main extends Component {
             return (
               <section className="notes-display" key={index}>
                 <Link to={`/notes/${note.id}`}>
-                  <h3>{note.name}</h3>
+                  <h3>{note.title}</h3>
                 </Link>
                 <DateModified note={note} />
                 <DeleteButton note={note} />

@@ -6,7 +6,7 @@ export default class DateModified extends Component {
   render() {
     return (
       <p>
-        <span className="date-modified">Date Modified: {this.props.note.modified}</span>
+        <span className="date-modified">Date Modified: {this.props.note.date_modified}</span>
       </p>
     )
   }

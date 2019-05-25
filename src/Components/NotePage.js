@@ -11,11 +11,12 @@ export default class Main extends Component {
       <AppContext.Consumer>
         {({ notes }) => {
           return notes
-            .filter(p => p.id === this.props.match.params.noteId)
+            // filter is not working
+            .filter(p => p.id === this.props.match.params.note_id)
             .map(note => {
               return (
                 <section className="notes-display" key={note.id}>
-                  <h3>{note.name}</h3>
+                  <h3>{note.title}</h3>
                   <DateModified note={note} />
                   <DeleteButton note={note} />
                   {note.content
