@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
-import { Route, Link, Redirect } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import './App.css';
+import ErrorBoundary from './ErrorBoundary';
+import AppContext from './AppContext';
+import Header from './Components/Header';
 import Nav from './Components/Nav';
 import Folder from './Components/Folder';
+import AddFolder from './Components/AddFolder';
 import Main from './Components/Main';
 import NotePage from './Components/NotePage';
-import AppContext from './AppContext';
-
-// why doesn't this work here if it's a global variable?
-// const AppContext = React.createContext();
+import AddNote from './Components/AddNote';
+import config from './config';
 
 class App extends Component {
   state = {
     folders: [],
-    notes: [],
-    redirect: null
-  };
+    notes: []
+  }
 
   componentDidMount() {
-    fetch('http://localhost:9090/folders')
+    fetch(config.API_ENDPOINT + `/folders`)
       .then(response => response.json())
       .then(responseJson =>
         this.setState({
@@ -26,7 +27,7 @@ class App extends Component {
         })
       );
 
-    fetch('http://localhost:9090/notes')
+    fetch(config.API_ENDPOINT + `/notes`)
       .then(response => response.json())
       .then(responseJson =>
         this.setState({
@@ -35,12 +36,8 @@ class App extends Component {
       );
   }
 
-  handleDeleteFetch = (id, isClicked) => {
-    if (isClicked) {
-      this.setState({ redirect: true });
-    }
-    const url = `http://localhost:9090/notes/${id}`;
-    fetch(url, {
+  handleDeleteFetch = (noteId) => {
+    fetch(config.API_ENDPOINT + `/notes/${noteId}`, {
       method: 'DELETE'
     })
       .then(response => {
@@ -50,50 +47,74 @@ class App extends Component {
           throw new Error(response.statusText);
         }
       })
-      .then(() => this.handleDelete(id));
-  };
+      .then(this.handleDelete(noteId))
+      .catch(error => console.log(error))
+  }
 
-  handleDelete = id => {
+  handleDelete(id) {
     this.setState({
       notes: this.state.notes.filter(note => note.id !== id)
     });
-  };
+  }
+
+  handlePostFolder(folderName) {
+    fetch(config.API_ENDPOINT + `/folders`, {
+      method: 'POST',
+      body: JSON.stringify({
+        name: folderName
+      }),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+  }
+
+  handlePostNote({ title, folder_id, content }) {
+    fetch(config.API_ENDPOINT + `/notes`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        date_modified: new Date(),
+        title,
+        folder_id,
+        content
+      })
+    })
+  }
 
   render() {
+    const context = {
+      folders: this.state.folders,
+      notes: this.state.notes,
+      handleDeleteFetch: this.handleDeleteFetch,
+      handleDelete: this.handleDelete,
+      handlePostFolder: this.handlePostFolder,
+      handlePostNote: this.handlePostNote
+    }
+
     return (
-      <AppContext.Provider
-        value={Object.assign({}, this.state, {
-          handleDeleteFetch: this.handleDeleteFetch,
-          handleDelete: this.handleDelete
-        })}
-      >
-        <div className="App">
-          <header>
-            <Link to="/">
-              <h1>Noteful</h1>
-            </Link>
-          </header>
-          <Nav />
-          <section className="app-content">
-            <main>
-              <Route exact path="/" component={Main} />
-              <Route path="/folder/:folderId" component={Folder} />
-              <Route
-                path="/note/:noteId"
-                render={routeProps =>
-                  this.state.redirect ? (
-                    <Redirect to="/" />
-                  ) : (
-                    <NotePage {...routeProps} />
-                  )
-                }
-              />
-            </main>
-          </section>
-        </div>
-      </AppContext.Provider>
-    );
+        <AppContext.Provider value={(context)}>
+          <div className="App">
+            <Route component={Header} />
+            <Route component={Nav} />
+              <main className="app-content">
+                <ErrorBoundary>
+                  <Route exact path="/" component={Main} />
+                </ErrorBoundary>
+                <Route path="/folders/:folder_id" component={Folder} />
+                <Route exact path="/add-folder" component={AddFolder} />
+                <Route exact path="/add-note" component={AddNote} />
+                <Route path="/notes/:note_id" render={routeProps => <NotePage {...routeProps} />} />
+                <div className="clear"></div>
+              </main>
+          </div>
+        </AppContext.Provider>
+      )
   }
 }
 
 export default App;
+
+

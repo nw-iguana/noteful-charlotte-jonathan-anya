@@ -1,0 +1,67 @@
+form {
+    width: 600px;
+    margin: 0 auto;
+}
+form label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+form input, form textarea {
+    display: block;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    width: 600px;
+    background-color: #fafafa;
+    padding: 10px 20px;
+    border: 1px solid #a9a9a9;
+    border-radius: 20px;
+    margin-bottom: 20px;
+}
+
+form select {
+    display: block;
+    margin-bottom: 20px;
+    width: 600px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1rem;
+    font-size: 1rem;
+    border-radius: 20px;
+    padding: 5px 20px;
+}
+
+.submit-button {
+    display: block;
+    cursor: pointer;
+    font-family: 'Open Sans', sans-serif;
+    color: #fafafa;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background-color: #45d0ad;
+    border: 0px;
+    padding: 5px 20px;
+    border-radius: 20px;
+    transition: 0.4s ease all;
+}
+
+.submit-button:hover {
+    background-color: #a5efdc;
+}
+
+.submit-button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.error-box {
+    float: right;
+    color: red;
+    margin-top: -60px;
+    padding: 20px;
+    border-radius: 20px;
+}

@@ -1,0 +1,23 @@
+header {
+    width: 100%;
+    font-family: 'Alex Brush', cursive;
+    padding-bottom: 30px;
+    margin-bottom: 60px;
+    text-align: center;
+    border-bottom: 1px solid #ffc381;
+}
+
+header h1 {
+    display: inline;
+    text-transform: none;
+    font-weight: normal;
+    font-size: 4.5rem;
+}
+
+header h2 {
+    display: inline;
+    text-transform: lowercase;
+    font-weight: normal;
+    font-size: 2.7rem;
+    margin-left: 15px;
+}

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import './Folder.css';
+import DateModified from './DateModified';
+import DeleteButton from './DeleteButton';
 import AppContext from '../AppContext';
 
 export default class Folder extends Component {
@@ -11,23 +12,16 @@ export default class Folder extends Component {
       <AppContext.Consumer>
         {({ notes }) => {
           return notes
-            .filter(note => note.folderId === this.props.match.params.folderId)
+            .filter(note => note.folder_id === parseInt(this.props.match.params.folder_id))
             .map(note => {
               return (
-                <main className="notes-display">
-                  <section className="note" key={note.id}>
-                    <Link to={`/note/${note.id}`}>
-                      <h3>{note.name}</h3>
-                    </Link>
-                    <p>Date Modified: {note.modified}</p>
-                    <button
-                      onClick={() => this.context.handleDeleteFetch(note.id)}
-                      className="delete-button"
-                    >
-                      Delete Note
-                    </button>
-                  </section>
-                </main>
+                <section className="notes-display" key={note.id}>
+                  <Link to={`/notes/${note.id}`}>
+                    <h3>{note.title}</h3>
+                  </Link>
+                <DateModified note={note} />
+                <DeleteButton note={note} />
+                </section>
               );
             });
         }}

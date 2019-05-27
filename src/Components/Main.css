@@ -1,19 +1,29 @@
 .notes-display {
-    width: 80%;
-    float: right;
-    outline: 1px solid purple;
-    padding: 30px;
-}
-
-.note {
     position: relative;
-    outline: 1px solid #aaa;
-    padding: 30px;
+    width: 70%;
+    float: right;
     margin-bottom: 30px;
+    padding: 30px;
+
+    background-color: #f8f7c9;
+    border-radius: 20px;
 }
 
-.delete-button {
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
+.notes-display h3 {
+    margin: 0;
+    padding: 0;
+    display: inline;
+
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 30px;
+    background-color: #fede8e;
+    border-radius: 20px;
+    transition: 0.4s ease all;
+}
+
+.notes-display h3:hover {
+    color: #555;
+    background-color: #ffe9b2;
 }

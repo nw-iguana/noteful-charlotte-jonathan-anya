@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import './NotePage.css';
 import AppContext from '../AppContext';
+import DateModified from './DateModified';
+import DeleteButton from './DeleteButton';
 
 export default class Main extends Component {
   static contextType = AppContext;
@@ -10,24 +11,19 @@ export default class Main extends Component {
       <AppContext.Consumer>
         {({ notes }) => {
           return notes
-            .filter(p => p.id === this.props.match.params.noteId)
+            .filter(p => p.id === parseInt(this.props.match.params.note_id))
             .map(note => {
               return (
                 <section className="notes-display" key={note.id}>
-                  <h3>{note.name}</h3>
-                  <p>Date Modified: {note.modified}</p>
-                  <button
-                    onClick={() =>
-                      this.context.handleDeleteFetch(note.id, true)
-                    }
-                    className="delete-button"
-                  >
-                    Delete Note
-                  </button>
-                  <p>{note.content}</p>
+                  <h3>{note.title}</h3>
+                  <DateModified note={note} />
+                  <DeleteButton note={note} />
+                  {note.content
+                    .split('\n \r')
+                    .map((para, index) => <p key={index}>{para}</p>)}
                 </section>
-              );
-            });
+              )
+            })
         }}
       </AppContext.Consumer>
     );
