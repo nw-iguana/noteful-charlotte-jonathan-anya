@@ -42,15 +42,13 @@ class App extends Component {
     })
       .then(response => {
         if (response.ok) {
-          // problem with response.json()
-          // "unexpected end of input"
-          console.log(response.json)
           return response.json();
         } else {
           throw new Error(response.statusText);
         }
       })
-      .then(this.handleDelete(noteId));
+      .then(this.handleDelete(noteId))
+      .catch(error => console.log(error))
   }
 
   handleDelete(id) {
@@ -60,7 +58,6 @@ class App extends Component {
   }
 
   handlePostFolder(folderName) {
-    // only works sometimes
     fetch(config.API_ENDPOINT + `/folders`, {
       method: 'POST',
       body: JSON.stringify({
@@ -73,7 +70,6 @@ class App extends Component {
   }
 
   handlePostNote({ title, folder_id, content }) {
-    // only works sometimes
     fetch(config.API_ENDPOINT + `/notes`, {
       method: 'POST',
       headers: {

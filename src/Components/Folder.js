@@ -11,7 +11,6 @@ export default class Folder extends Component {
     return (
       <AppContext.Consumer>
         {({ notes }) => {
-          console.log(notes)
           return notes
             .filter(note => note.folder_id === parseInt(this.props.match.params.folder_id))
             .map(note => {

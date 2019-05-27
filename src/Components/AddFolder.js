@@ -11,6 +11,10 @@ export default class AddFolder extends Component {
     validation: ''
   }
 
+  handlePostSubmit = () => {    
+    this.context.handlePostFolder(this.state.folderName);
+  }
+
   handleFolderName = (e) => {
     let folderInput = e.target.value;
     this.setState({ folderName: folderInput }, this.validateFolder(folderInput))
@@ -46,10 +50,6 @@ export default class AddFolder extends Component {
     if (this.state.folderNameValid) {
       this.setState({folderName: name})
     }
-  }
-
-  handlePostSubmit = () => {
-    this.context.handlePostFolder(this.state.folderName);
   }
 
   render() {
